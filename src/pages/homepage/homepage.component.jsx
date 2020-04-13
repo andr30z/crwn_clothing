@@ -1,10 +1,10 @@
 import React from 'react';
-import "./homepage.styles.scss";
+import {HomePageContainer} from './homapage.styles';
 import MenuDiretorio from "../../components/menudiretorio/menudiretorio.component";
 const HomePage = () => (
-  <div className="homepage">
+  <HomePageContainer>
     <MenuDiretorio/>
-  </div>
+  </HomePageContainer>
 )
 
 export default HomePage;
