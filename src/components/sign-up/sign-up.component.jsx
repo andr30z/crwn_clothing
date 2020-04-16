@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import './sign-up.styles.scss';
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import { signUpStart } from "../../redux/user/user.action";
+import { connect } from 'react-redux';
+import { selectError, SelectCurrentUser } from '../../redux/user/user.selector';
+import { createStructuredSelector } from 'reselect';
 
 export class SignUp extends Component {
   constructor() {
@@ -13,39 +16,29 @@ export class SignUp extends Component {
       displayName: "",
       password: "",
       confirmPassword: "",
-
+      errorMessage: undefined
     }
   }
 
   handleSubmit = async event => {
     event.preventDefault();
 
-    const { displayName, email, password, confirmPassword } = this.state;
+    const { email, displayName, password, confirmPassword } = this.state;
+    const { signUpStart, error } = this.props;
 
     if (password !== confirmPassword) {
-      alert("passwords don't match");
+      alert("Senhas não correspondem!");
       return;
     }
 
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
+    await signUpStart({ displayName, email, password });
 
-      await createUserProfileDocument(user, { displayName });
-
-      this.setState({
-        displayName: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-      });
-    } catch (error) {
-      console.error(error);
+    if (error) {
+      this.setState({ errorMessage: error.message });
     }
+
   };
-  
+
   handleChange = event => {
     event.preventDefault();
     const { name, value } = event.target;
@@ -56,7 +49,8 @@ export class SignUp extends Component {
   }
 
   render() {
-    const { email, displayName, confirmPassword, password } = this.state;
+    const { email, displayName, confirmPassword, password, errorMessage } = this.state;
+
     return (
       <div className="sign-up">
         <h2 className='tile'>Não tem conta?</h2>
@@ -92,10 +86,27 @@ export class SignUp extends Component {
           />
 
           <CustomButton type="submit">Se inscreva</CustomButton>
+
         </form>
+        {
+          errorMessage && <h3 className="error" style={{ color: 'red' }}> {errorMessage} </h3>
+        }
+
       </div>
     )
+
   }
 }
 
-export default SignUp;
+
+const mapStateToProps = createStructuredSelector({
+  error: selectError,
+  user: SelectCurrentUser
+});
+
+
+const mapDispatchToProps = dispatch => ({
+  signUpStart: (userData) => dispatch(signUpStart(userData))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

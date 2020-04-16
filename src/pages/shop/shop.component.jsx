@@ -4,13 +4,13 @@ import collectionsOverviewContainer
   from "../../components/collections-overview/collections-overview.container";
 import collectionsPageContainer from "../collection/collection.container";
 import { connect } from 'react-redux';
-import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions';
+import { fetchCollectionsStart} from '../../redux/shop/shop.actions';
 
 //
 class ShopPage extends React.Component {
   componentDidMount() {
-    const { fetchCollectionsStartAsync } = this.props;
-    fetchCollectionsStartAsync();
+    const { fetchCollectionStart } = this.props;
+    fetchCollectionStart();
     //codigo antes d redux-thunk
     // const collectionRef = firestore.collection('collections');
     // //sempre que este componente for montado ou quando a collectionRef ter um update 
@@ -46,7 +46,7 @@ class ShopPage extends React.Component {
 
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync())
+  fetchCollectionStart: () => dispatch(fetchCollectionsStart())
 })
 
 export default connect(
