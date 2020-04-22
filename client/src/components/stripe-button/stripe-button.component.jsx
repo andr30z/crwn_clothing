@@ -1,13 +1,26 @@
 import React from 'react';
 import StripeCheckout from "react-stripe-checkout";
+import axios from 'axios';
+
 
 const StripeButton = ({ price }) => {
   const stripePrice = price * 100;
   const publishableKey = "pk_test_5Gw4e0xEUXMGT8SamguqD3KH00PFLOdmas";
 
   const onToken = (token) => {
-    console.log(token);
-    alert('Sucesso!')
+    axios({
+      url: 'payment',
+      method: 'post',
+      data: {
+        amount: stripePrice,
+        token
+      }
+    }).then(res => {
+      alert('Pagamento realizado com sucesso');
+    }).catch(error => {
+      console.log(JSON.parse(error));
+      alert('Cartão de credito não reconhecido!');
+    });;
   }
   return (
 
