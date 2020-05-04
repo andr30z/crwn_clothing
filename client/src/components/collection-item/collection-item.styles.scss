@@ -46,4 +46,24 @@
       width: 10%;
     }
   }
+  @media screen and (max-width: 800px) {
+    width: 40vw;
+    &:hover{
+      .image{
+        opacity:unset;
+      }
+      .custom-button{
+        opacity: unset;
+      }
+    }
+    .custom-button{
+      opacity: 0.9;
+      display: block;
+      min-width: unset;
+      padding: 0 10px ;
+      margin-bottom: 20px;
+      font-size: 8px;
+      font-weight: 900;
+    }
+  }
 }
