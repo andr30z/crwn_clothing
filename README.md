@@ -1,7 +1,7 @@
 ## Crown Clothing 
 
 <div align="center">
-    <img src="./client/assets/readmeIMG1.png" alt="Imagem1" width="400"/>  
+    <img src="./client/assets/readmeIMG1.png" alt="Imagem1" width="800"/>  
     <img src="./client/assets/readmeIMG2.png" alt="Imagem2" width="400"/>  
     <img src="./client/assets/readmeIMG3.png" alt="Imagem3" width="400"/>
 </div>
